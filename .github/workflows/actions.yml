@@ -1,0 +1,23 @@
+name: actions
+run-name: ${{ github.event.inputs.sku }}, ${{ github.event.inputs.minutes }}m
+on:
+  workflow_dispatch:
+    inputs:
+      sku:
+        type: choice
+        description: SKU
+        options:
+          - ubuntu-latest
+          - windows-latest
+          - macos-latest
+          - macos-13-xl
+      minutes:
+        description: Minutes
+        default: "10"
+        required: true
+jobs:
+  run:
+    runs-on: ${{ github.event.inputs.sku }}
+    steps:
+      - run: echo "😴 Sleeping for ${{ github.event.inputs.minutes }} minute(s) to generate Actions usage"
+      - run: sleep $((${{ github.event.inputs.minutes }} * 60))
